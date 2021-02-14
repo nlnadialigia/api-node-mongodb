@@ -4,6 +4,7 @@ import usersRoute from './Routes/users.js';
 import mongoose from 'mongoose';
 // import bodyParser from 'body-parser';
 import { config } from 'dotenv';
+import bodyParser from 'body-parser';
 
 config();
 
@@ -29,6 +30,8 @@ mongoose.connection.on('disconnected', () => {
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use('/', indexRoute);
 app.use('/users', usersRoute);
 
