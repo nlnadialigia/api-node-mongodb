@@ -1,16 +1,29 @@
 import express from 'express';
+import Users from '../model/user.js';
 const router = express.Router();
 
 router.get('/', (request, response) => {
-  return response.send({ message: 'Tudo ok com o método GET da rota users' });
-});
+  Users.find({}, (error, data) => {
+    if (error) return response.send({ error: 'Erro na consulta de usuário' });
 
-router.post('/', (request, response) => {
-  return response.send({ message: 'Tudo ok com o método POST da rota users' });
+    return response.send(data);
+  });
 });
 
 router.post('/create', (request, response) => {
-  return response.send({ message: 'Seu usuário foi criado' });
+  const { email, password } = request.body;
+
+  if (!email || !password) return response.send({ error: 'Dados insuficientes para criação do usuáio' });
+
+  Users.findOne({ email }, (error, data) => {
+    if (error) return response.send({ error: 'Erro ao buscar usuário' });
+    if (data) return response.send({ error: 'Usuário já cadastrado!' });
+  });
+
+  Users.create({ email, password }, (error, data) => {
+    if (error) return response.send({ error: 'Erro ao cadastrar o usuário' });
+    return response.send(data);
+  });
 });
 
 export default router;
