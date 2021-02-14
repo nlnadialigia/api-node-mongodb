@@ -1,12 +1,13 @@
 import bcrypt from 'bcrypt';
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import config from '../config/config.js';
 import Users from '../model/user.js';
 
 const router = express.Router();
 
 const createUserToken = (userId) => {
-  return jwt.sign({ id: userId }, 'batatafrita2021', { expiresIn: '7d' });
+  return jwt.sign({ id: userId }, config.jwt_pass, { expiresIn: config.jwt_expires });
 };
 
 router.get('/', async (request, response) => {
