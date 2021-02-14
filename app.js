@@ -1,16 +1,14 @@
+import bodyParser from 'body-parser';
 import express from 'express';
 import mongoose from 'mongoose';
-import { config } from 'dotenv';
-import bodyParser from 'body-parser';
+import config from './config/config.js';
 import indexRoute from './Routes/index.js';
 import usersRoute from './Routes/users.js';
-
-config();
 
 (async () => {
   try {
     await mongoose.connect(
-      `${process.env.db}`,
+      `${config.bd_string}`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
