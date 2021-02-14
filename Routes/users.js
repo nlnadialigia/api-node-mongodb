@@ -1,7 +1,13 @@
 import bcrypt from 'bcrypt';
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import Users from '../model/user.js';
+
 const router = express.Router();
+
+const createUserToken = (userId) => {
+  return jwt.sign({ id: userId }, 'batatafrita2021', { expiresIn: '7d' });
+};
 
 router.get('/', async (request, response) => {
   try {
@@ -25,7 +31,7 @@ router.post('/create', async (request, response) => {
     const user = await Users.create({ email, password });
     user.password = undefined;
 
-    return response.send(user);
+    return response.send({ user, token: createUserToken(user.id) });
   } catch (error) {
     return response.send({ error: 'Erro ao cadastrar o usuário' });
   }
@@ -46,7 +52,7 @@ router.post('/auth', async (request, response) => {
     if (!authUser) return response.send({ error: 'Erro ao autenticar o usuário' });
 
     user.password = undefined;
-    return response.send(user);
+    return response.send({ user, token: createUserToken(user.id) });
   } catch (error) {
     return response.send({ error: 'Usuário não registrado' });
   }
