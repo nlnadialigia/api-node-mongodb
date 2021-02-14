@@ -18,11 +18,13 @@ router.post('/create', (request, response) => {
   Users.findOne({ email }, (error, data) => {
     if (error) return response.send({ error: 'Erro ao buscar usuário' });
     if (data) return response.send({ error: 'Usuário já cadastrado!' });
-  });
 
-  Users.create({ email, password }, (error, data) => {
-    if (error) return response.send({ error: 'Erro ao cadastrar o usuário' });
-    return response.send(data);
+    Users.create({ email, password }, (error, data) => {
+      if (error) return response.send({ error: 'Erro ao cadastrar o usuário' });
+
+      data.password = undefined;
+      return response.send(data);
+    });
   });
 });
 
