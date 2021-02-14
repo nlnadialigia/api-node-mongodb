@@ -1,32 +1,28 @@
 import express from 'express';
-import indexRoute from './Routes/index.js';
-import usersRoute from './Routes/users.js';
 import mongoose from 'mongoose';
-// import bodyParser from 'body-parser';
 import { config } from 'dotenv';
 import bodyParser from 'body-parser';
+import indexRoute from './Routes/index.js';
+import usersRoute from './Routes/users.js';
 
 config();
 
-mongoose.connect(
-  'db',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
+(async () => {
+  try {
+    await mongoose.connect(
+      `${process.env.db}`,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+      }
+    );
+    console.log('MongoDB Conectado com sucesso!');
+  } catch (error) {
+    console.log('Erro ao conectar no MongoDB');
   }
-);
-
-mongoose.set('useCreateIndex', true);
-
-mongoose.connection.on('error', () => {
-  console.log('Erro na conexão com o banco de dados');
-});
-
-mongoose.connection.on('disconnected', () => {
-  console.log('Aplicação desconectada do banco de dados');
-});
+})();
 
 const app = express();
 
