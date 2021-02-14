@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --fix",
-    "dev": "node app.js"
+    "dev": "nodemon app.js"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
@@ -17,7 +17,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "git-commit-msg-linter": "^3.0.0",
     "husky": "4.3.8",
-    "lint-staged": "10.5.2"
+    "lint-staged": "10.5.2",
+    "nodemon": "^2.0.7"
   },
   "dependencies": {
     "express": "^4.17.1"

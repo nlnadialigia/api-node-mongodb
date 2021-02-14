@@ -1,19 +1,12 @@
 import express from 'express';
+import indexRoute from './Routes/index.js';
+import usersRoute from './Routes/users.js';
+
 const app = express();
 
-app.get('/', (request, response) => {
-  const obj = request.query;
-  return response.send({ message: `Tudo ok com o método GET! Você enviou o nome ${obj.name} com idade de ${obj.age} anos!` });
-});
-
-app.post('/', (request, response) => {
-  return response.send({ message: 'Tudo ok com o método POST!' });
-});
+app.use('/', indexRoute);
+app.use('/users', usersRoute);
 
 app.listen(3030, () => {
   console.log('API is running on PORT 3030');
-});
-
-app.listen(3030, () => {
-  console.log('API is running on PORT 3030!');
 });
