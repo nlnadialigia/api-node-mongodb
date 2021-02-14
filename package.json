@@ -1,0 +1,8 @@
+{
+  "name": "api-node-mongodb",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/nlnadialigia/api-node-mongodb",
+  "author": "Nadia <nlnadialigia@gmail.com>",
+  "license": "MIT"
+}
